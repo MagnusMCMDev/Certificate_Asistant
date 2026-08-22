@@ -40,3 +40,12 @@
 
 .exam-clock { font-variant-numeric: tabular-nums; font-weight: 700; color: var(--study-ink); }
 .exam-clock-low { color: var(--study-exam, #be123c); }
+
+.doubt-badge {
+  background: #fef3c7; color: #92400e; border: 1px solid #fcd34d;
+  border-radius: 6px; padding: 0.1em 0.5em; font-size: 0.78em; font-weight: 700;
+}
+.doubt-note {
+  background: #fffbeb; border-left: 4px solid #f59e0b; color: #92400e;
+  padding: 0.7em 0.9em; margin: 0 0 0.8em; border-radius: 6px; font-size: 0.9em;
+}
