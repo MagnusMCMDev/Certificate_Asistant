@@ -4,12 +4,12 @@
     "algo": "PBKDF2",
     "hash": "SHA-256",
     "iterations": 600000,
-    "salt_b64": "GmOfauQNsuDduJbb5Ol+mw=="
+    "salt_b64": "x0xwhmTPHIcpb1+2bVM7rQ=="
   },
   "cipher": {
     "algo": "AES-GCM",
     "key_bits": 256,
-    "iv_b64": "7W6Ih0NtGtsCtsXp",
+    "iv_b64": "7TxFTpF7Ke/SWVuE",
     "tag_bits": 128
   },
   "codec": "gzip"
