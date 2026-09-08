@@ -182,8 +182,8 @@ table.qlist td.num { text-align: center; color: var(--text-muted); }
 p.canonical { white-space: pre-wrap; line-height: 1.6; margin: 0; }
 p.stem { white-space: pre-wrap; line-height: 1.6; }  
 
-.canonical .cs-para, .stem .cs-para, .ref-stem .cs-para, .scenario-text .cs-para { white-space: pre-wrap; line-height: 1.6; margin: 0 0 0.8em; }
-.canonical .cs-para:last-child, .stem .cs-para:last-child, .ref-stem .cs-para:last-child, .scenario-text .cs-para:last-child { margin-bottom: 0; }
+.canonical .cs-para, .stem .cs-para, .ref-stem .cs-para, .scenario-text .cs-para, .expl-text .cs-para { white-space: pre-wrap; line-height: 1.6; margin: 0 0 0.8em; }
+.canonical .cs-para:last-child, .stem .cs-para:last-child, .ref-stem .cs-para:last-child, .scenario-text .cs-para:last-child, .expl-text .cs-para:last-child { margin-bottom: 0; }
 .q-table { border-collapse: collapse; margin: 0.6em 0 1em; width: 100%; border: 1px solid #c8c6c4; }
 .q-table th, .q-table td { border: 1px solid #c8c6c4; padding: 0.5em 0.85em; text-align: left; vertical-align: top; line-height: 1.45; }
 .q-table th { background: #f3f2f1; font-weight: 600; color: var(--ms-text); border-bottom: 2px solid #b3b0ad; }
