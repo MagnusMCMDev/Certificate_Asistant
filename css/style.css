@@ -776,6 +776,9 @@ details[open] > .scenario-summary::before { content: "▾"; }
 .review-progress-bar { height: 6px; background: #e7e9f2; border-radius: 4px; overflow: hidden; margin-bottom: 1.2em; }
 .review-progress-bar > span { display: block; height: 100%; background: #0d9488; transition: width .2s ease; }
 .ref-expl-inline { margin: 0.6em 0; }
+
+.ref-expl-inline p { white-space: pre-wrap; line-height: 1.6; }
+.ref-expl-inline .ref-link, .ref-expl-inline .ref-link a { white-space: normal; }
 .ref-expl-inline .ref-link a { word-break: break-all; }
 .solution-spoiler .verify-line { font-size: 0.85em; }
 
@@ -879,3 +882,33 @@ table.report .ko { color: var(--study-exam); font-weight: 700; }
 .aw-fillblank .fb-text { white-space: pre-wrap; }
 .aw-fillblank .fb-select { white-space: normal; margin: 0 0.25em; vertical-align: middle; max-width: 24em; }
 .cs-blank { display: inline-block; min-width: 5em; border-bottom: 2px solid var(--primary); text-align: center; color: var(--text-muted); }
+
+.exam-flag { display: flex; align-items: center; gap: 0.45em; margin: 1em 0 0.8em; padding: 0.55em 0.8em; border: 1px dashed #e7c9a8; border-radius: 10px; background: #fffaf3; cursor: pointer; font-weight: 600; }
+.exam-flag input { width: 1.05em; height: 1.05em; cursor: pointer; }
+.exam-flag .muted { font-weight: 400; font-size: 0.88em; }
+.exam-nav { margin-top: 0.8em; }
+.exam-revisit-note { margin: 0 0 1em; padding: 0.6em 0.9em; border-left: 4px solid var(--study-accent); background: #f2f2fd; border-radius: 0 8px 8px 0; font-size: 0.92em; }
+
+.review-title { margin: 0.2em 0 0.3em; }
+.exam-review-summary { display: flex; gap: 0.5em; flex-wrap: wrap; margin: 0.9em 0; }
+.exam-review-summary .pill { border-radius: 999px; padding: 0.25em 0.8em; font-size: 0.88em; font-weight: 600; background: #f1f2f5; color: #5b6172; }
+.exam-review-summary .pill-flag { background: #fff4e0; color: #b9770e; }
+.exam-review-summary .pill-blank { background: #fdecef; color: #b3143c; }
+
+table.exam-review .er-stem { line-height: 1.4; }
+table.exam-review .er-type { font-size: 0.8em; }
+table.exam-review .er-answer { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.88em; }
+table.exam-review .er-pending { color: #b3143c; font-weight: 600; font-size: 0.9em; }
+table.exam-review .er-flagcell form { margin: 0; }
+table.exam-review .btn-flag { background: none; border: none; font-size: 1.15em; cursor: pointer; line-height: 1; padding: 0.2em; }
+table.exam-review .btn-sm { padding: 0.35em 0.8em; font-size: 0.88em; white-space: nowrap; }
+.row-flag td { background: #fffaf0; box-shadow: inset 3px 0 0 #e8a33d; }
+.row-blank td { background: #fdf4f6; }
+.report-actions form { margin: 0; }
+
+@media (max-width: 640px) {
+  table.exam-review .er-type, table.exam-review thead { display: none; }
+  table.exam-review td { padding: 0.45em 0.4em; }
+}
+
+.solution-spoiler.spoiler-flagged > summary { background: #fffaf0; box-shadow: inset 3px 0 0 #e8a33d; }

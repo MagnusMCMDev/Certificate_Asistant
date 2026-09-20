@@ -37,6 +37,12 @@
     root.appendChild(list);
     root._serialize = () =>
       Array.from(list.querySelectorAll("input")).filter((i) => i.checked).map((i) => i.value);
+    root._restore = (val) => {
+      const want = Array.isArray(val) ? val.map(String) : [];
+      list.querySelectorAll("input").forEach((i) => {
+        i.checked = want.indexOf(i.value) !== -1;
+      });
+    };
   }
 
   function binaryCols(choices) {
@@ -99,6 +105,16 @@
         });
         return out;
       };
+      root._restore = (val) => {
+        if (!val || typeof val !== "object") return;
+        table.querySelectorAll("tr").forEach((tr) => {
+          if (!tr.dataset.stmt) return;
+          const want = val[tr.dataset.stmt];
+          tr.querySelectorAll("input").forEach((i) => {
+            i.checked = !!want && i.value === want;
+          });
+        });
+      };
       return;
     }
 
@@ -123,6 +139,12 @@
         out[s.dataset.stmt] = s.value;
       });
       return out;
+    };
+    root._restore = (val) => {
+      if (!val || typeof val !== "object") return;
+      table.querySelectorAll("select").forEach((s) => {
+        s.value = val[s.dataset.stmt] || "";
+      });
     };
   }
 
@@ -151,6 +173,12 @@
         out[s.dataset.key] = s.value;
       });
       return out;
+    };
+    root._restore = (val) => {
+      if (!val || typeof val !== "object") return;
+      wrap.querySelectorAll("select").forEach((s) => {
+        s.value = val[s.dataset.key] || "";
+      });
     };
   }
 
@@ -197,6 +225,7 @@
       slot.appendChild(el("div", { class: "aw-stmt", text: t.statement }));
       slot.appendChild(drop);
       slot._drop = drop;
+      slot._assign = assign;
       targets.appendChild(slot);
     });
     root.appendChild(el("div", { class: "aw-dd-help", text: "Arrastra cada valor a su hueco (o pulsa un valor y luego el hueco)." }));
@@ -212,6 +241,13 @@
         out[slot.dataset.stmt] = slot._drop.dataset.assigned || "";
       });
       return out;
+    };
+    root._restore = (val) => {
+      if (!val || typeof val !== "object") return;
+      targets.querySelectorAll(".aw-slot").forEach((slot) => {
+        const v = val[slot.dataset.stmt];
+        if (v) slot._assign(v);
+      });
     };
   }
 
@@ -267,6 +303,14 @@
     ]));
 
     root._serialize = () => slots.map((drop) => { const t = drop.querySelector(".aw-chip"); return t ? t._item.text : ""; });
+    root._restore = (val) => {
+      if (!Array.isArray(val)) return;
+      val.forEach((text, i) => {
+        if (!text || i >= slots.length) return;
+        const tile = Array.from(pool.querySelectorAll(".aw-chip")).find((c) => c._item.text === text);
+        if (tile) moveTile(tile, slots[i]);
+      });
+    };
   }
 
   function renderDragSelect(root, data) {
@@ -315,6 +359,15 @@
     ]));
 
     root._serialize = () => slots.map((drop) => { const t = drop.querySelector(".aw-chip"); return t ? t._item.text : ""; }).filter(Boolean);
+    root._restore = (val) => {
+      if (!Array.isArray(val)) return;
+      let k = 0;  // unordered: fill the slots left to right
+      val.forEach((text) => {
+        if (!text || k >= slots.length) return;
+        const tile = Array.from(pool.querySelectorAll(".aw-chip")).find((c) => c._item.text === text);
+        if (tile) { moveTile(tile, slots[k]); k++; }
+      });
+    };
   }
 
   const RENDERERS = {
@@ -331,7 +384,10 @@
     if (!rootEl || !fn) return null;
     rootEl.innerHTML = "";
     fn(rootEl, data);
-    return { serialize: () => (rootEl._serialize ? rootEl._serialize() : null) };
+    return {
+      serialize: () => (rootEl._serialize ? rootEl._serialize() : null),
+      restore: (val) => { if (rootEl._restore) rootEl._restore(val); },
+    };
   }
 
   window.StudyWidget = { mount };
@@ -350,6 +406,14 @@
     }
     const w = mount(root, data);
     if (!w) return;
+    const prefillEl = document.getElementById("study-prefill");
+    if (prefillEl && prefillEl.textContent.trim()) {
+      try {
+        w.restore(JSON.parse(prefillEl.textContent));
+      } catch (e) {
+        
+      }
+    }
     form.addEventListener("submit", () => {
       answerInput.value = JSON.stringify(w.serialize());
     });
