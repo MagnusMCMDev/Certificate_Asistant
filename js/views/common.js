@@ -46,7 +46,9 @@ export function correctOptionsList(q) {
 
 export function answerNodes(q) {
   const nodes = [];
-  if (q.doubtful)
+  if (q.unverified)
+    nodes.push(el("p", { class: "doubt-note", text: "⚠ SIN VERIFICAR: esta pregunta es nueva y aún no se ha contrastado con la documentación oficial. La respuesta mostrada es la de la fuente original (vídeo o volcado) — tómala como hipótesis." }));
+  else if (q.doubtful)
     nodes.push(el("p", { class: "doubt-note", text: "⚠ Respuesta DUDOSA: verificada contra la documentación oficial, que no la arbitra de forma concluyente. La respuesta mostrada es la de la fuente original — contrástala antes de darla por buena." }));
   nodes.push(correctOptionsList(q));
   if (q.explanation) {
@@ -68,7 +70,9 @@ export function answerNodes(q) {
 
 export function metaEl(q) {
   const kids = [el("span", { class: "muted", text: q.question_type })];
-  if (q.doubtful)
+  if (q.unverified)
+    kids.push(el("span", { class: "doubt-badge", title: "Pregunta nueva: su respuesta es la de la fuente original y aún no se ha contrastado con la documentación oficial.", text: "⚠ Sin verificar" }));
+  else if (q.doubtful)
     kids.push(el("span", { class: "doubt-badge", title: "La documentación oficial no arbitra esta respuesta; procede de la fuente original.", text: "⚠ Respuesta dudosa" }));
   if (q.syl && q.syl.relevance != null)
     kids.push(el("span", { class: "rel-badge rel-" + q.syl.relevance, text: "Temario " + q.syl.relevance + "/9" }));
