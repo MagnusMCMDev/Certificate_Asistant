@@ -1,6 +1,7 @@
 import { login, restore, logout } from "./auth.js";
 import { cryptoAvailable } from "./crypto.js";
 import { parseHash, onRoute } from "./router.js";
+import { certCodes } from "./store.js";
 import * as portal from "./views/portal.js";
 import * as review from "./views/review.js";
 import * as browse from "./views/browse.js";
@@ -13,6 +14,11 @@ const $ = (id) => document.getElementById(id);
 
 function route() {
   const { path, params } = parseHash();
+  const cert = params.get("cert");
+  if (cert && !certCodes().includes(cert)) {
+    location.hash = "#/";
+    return;
+  }
   const view = ROUTES[path] || portal;
   const main = $("app-main");
   try {
